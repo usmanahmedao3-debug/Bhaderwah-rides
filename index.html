@@ -1,3 +1,71 @@
-<h1>BD Rides</h1>
-<p>Bhaderwah Doda Cab Booking</p>
-<link rel="manifest" href="/manifest.json">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD Rides - Bhaderwah To Doda</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #0b0b0b; color: #ffffff; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background: #161616; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 1px solid #222; }
+        h1 { font-size: 22px; margin-bottom: 5px; text-align: center; }
+        p { font-size: 14px; color: #aaa; text-align: center; margin-bottom: 20px; }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; background: #222; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 16px; }
+        button { width: 100%; padding: 14px; background: #ffffff; color: #000; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #e0e0e0; }
+        .success-box { background: #1e3a1e; border: 1px solid #2ea44f; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px; color: #51c451; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>BD Rides</h1>
+        <p>Bhaderwah To Doda Cab Booking</p>
+        
+        <div id="login-section">
+            <input type="tel" id="phone" placeholder="Enter Mobile Number (+91)" maxlength="10">
+            <button onclick="sendOTP()">Send OTP →</button>
+        </div>
+
+        <div id="otp-section" style="display:none;">
+            <input type="text" id="otp-input" placeholder="Enter 4-digit OTP" maxlength="4">
+            <button onclick="verifyOTP()">Verify & Book Ride</button>
+        </div>
+
+        <div id="success-msg" class="success-box">
+            <h3>Ride Confirmed! 🎉</h3>
+            <p style="color:#a3ffa3; margin-top:5px;">A driver has been assigned. We will contact you shortly.</p>
+        </div>
+    </div>
+
+    <script>
+        let generatedOTP = "";
+
+        function sendOTP() {
+            const phone = document.getElementById('phone').value;
+            if(phone.length < 10) {
+                alert("Please enter a valid 10-digit mobile number");
+                return;
+            }
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+            alert("Testing OTP for " + phone + " is: " + generatedOTP);
+            
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
+        }
+
+        function verifyOTP() {
+            const enteredOTP = document.getElementById('otp-input').value;
+            if(enteredOTP == generatedOTP) {
+                document.getElementById('otp-section').style.display = 'none';
+                document.getElementById('success-msg').style.display = 'block';
+            } else {
+                alert("Incorrect OTP. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>
